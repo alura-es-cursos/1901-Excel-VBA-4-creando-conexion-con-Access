@@ -1,0 +1,25 @@
+
+Private Function fnActualizaBanco(pSQL, rError As String) As Boolean
+
+    Dim dbConexion As adodb.Connection
+    
+On Error GoTo ErrorConexion
+    
+    Set dbConexion = New adodb.Connection
+    
+    dbConexion.connectionstring = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\server\location;"
+    dbConexion.Open
+    dbConexion.Execute pSQL
+    
+    dbConexion.Close
+    Set dbConexion = Nothing
+    
+    fnActualizaBanco = True
+    Exit Function
+    
+ErrorConexion:
+    rError = Err.Description
+    fnActualizaBanco = False
+    Set dbConexion = Nothing
+    
+End Function
